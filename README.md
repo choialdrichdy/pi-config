@@ -6,13 +6,29 @@ Personal configuration for [pi](https://github.com/earendil-works/pi-coding-agen
 
 ```
 pi-config/
+├── AGENTS.md                  # Global persona — loaded at startup (always active)
 ├── extensions/
-│   ├── ask-user-question.ts    # Interactive TUI tool for asking the user questions
-│   └── read-only-mode.ts      # /read-only command to enforce tool access restrictions
+│   ├── ask-user-question.ts   # Interactive TUI tool for asking the user questions
+│   └── read-only-mode.ts     # /read-only command to enforce tool access restrictions
 ├── skills/
-│   └── stop-slop/             # Skill for removing AI writing patterns from prose
+│   ├── prd-engineering/       # Structured PRD interview → tight specs
+│   ├── spec-driven/           # Implement features by tracing each AC to code
+│   ├── pdf-reader/            # Read and comprehend PDF files
+│   └── stop-slop/             # Remove AI writing patterns from prose
+├── templates/
+│   ├── PRD_TEMPLATE.md        # Reusable PRD document template
+│   └── AC_TEMPLATE.md         # How to write good acceptance criteria for AI
 └── README.md
 ```
+
+## Global Config (AGENTS.md)
+
+`AGENTS.md` at the project root is symlinked to `~/.pi/agent/AGENTS.md` and loaded at every startup. It defines:
+
+- Stack and conventions (TypeScript, Go, Python)
+- Hard rules (no code without a spec, ask before destructive actions, error handling is not optional)
+- Workflow (plan → implement → review)
+- Communication style (direct, concise, push back on ambiguity)
 
 ## Extensions
 
@@ -38,6 +54,24 @@ A `/read-only` command that restricts the agent to a minimal set of read-only to
 
 ## Skills
 
+### prd-engineering
+
+A structured interview process that transforms rough feature ideas into tight, implementable PRDs. Walks through intent capture, scope/boundaries, acceptance criteria, and architecture constraints. Designed to eliminate the steering problem — gaps in the spec are surfaced before code is written.
+
+See [skills/prd-engineering/SKILL.md](skills/prd-engineering/SKILL.md).
+
+### spec-driven
+
+Implements features against a structured PRD spec. Every code change is traced to an acceptance criterion. Prevents scope creep, forces edge case handling, and stops when it hits a non-goal. Designed to work in pair with the PRD engineering skill.
+
+See [skills/spec-driven/SKILL.md](skills/spec-driven/SKILL.md).
+
+### pdf-reader
+
+Read and comprehend PDF files using text extraction + selective page rendering. Uses a hybrid approach for maximum comprehension of equations, diagrams, and structured content.
+
+See [skills/pdf-reader/SKILL.md](skills/pdf-reader/SKILL.md).
+
 ### stop-slop
 
 A skill that teaches the agent to eliminate predictable AI writing patterns from prose. Includes:
@@ -47,9 +81,33 @@ A skill that teaches the agent to eliminate predictable AI writing patterns from
 
 See [skills/stop-slop/README.md](skills/stop-slop/README.md) for details.
 
-## Usage
+## Templates
 
-Load this directory as a pi config source. The extensions register automatically on startup. The skill is available when the agent is prompted with pattern-removal tasks.
+### PRD_TEMPLATE.md
+
+A structured document template for Product Requirements Documents. Covers core goal, user stories, acceptance criteria, non-goals, edge cases, architecture constraints, and open questions. Used by the PRD engineering skill.
+
+### AC_TEMPLATE.md
+
+A guide to writing good acceptance criteria for AI. Covers the 5 patterns (action→result, condition→behavior, negative constraints, state transitions, quantitative bounds) and common anti-patterns.
+
+## The Workflow
+
+The two skills + templates work together to create a **spec-first pipeline**:
+
+```
+Rough idea
+    ↓
+[prd-engineering skill] — structured interview captures intent, boundaries, ACs
+    ↓
+Structured PRD document (PRD_TEMPLATE.md)
+    ↓
+Review & approve
+    ↓
+[spec-driven skill] — implement with AC tracing, edge case handling, non-goal checks
+    ↓
+Code that maps to every acceptance criterion
+```
 
 ## Setup with GNU Stow
 
