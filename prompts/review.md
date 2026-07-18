@@ -1,0 +1,1 @@
+Activate the code-review-ai skill. Review the code changes I just made. Run the full AI-specific checklist, check AC coverage against the PRD, verify edge cases, and give me a verdict with issues found.

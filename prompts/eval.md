@@ -1,0 +1,1 @@
+Run the eval rubric against the code I just wrote. Check AC coverage, code quality, edge cases, AI-specific failure modes, and trajectory. Give me a score and verdict.

@@ -1,0 +1,1 @@
+Activate the PRD engineering skill. Run the structured interview for the feature I'm about to describe. Start with Phase 1: Intent Capture.

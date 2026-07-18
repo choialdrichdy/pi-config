@@ -1,0 +1,1 @@
+Activate the spec-driven skill. Take the approved PRD and produce an implementation plan. List the files to create/modify, map each AC to an approach, and flag any edge cases. Ask for confirmation before writing code.

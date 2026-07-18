@@ -13,11 +13,18 @@ pi-config/
 ├── skills/
 │   ├── prd-engineering/       # Structured PRD interview → tight specs
 │   ├── spec-driven/           # Implement features by tracing each AC to code
+│   ├── code-review-ai/        # Code review for AI-generated code (AI-specific failure modes)
 │   ├── pdf-reader/            # Read and comprehend PDF files
 │   └── stop-slop/             # Remove AI writing patterns from prose
 ├── templates/
 │   ├── PRD_TEMPLATE.md        # Reusable PRD document template
-│   └── AC_TEMPLATE.md         # How to write good acceptance criteria for AI
+│   ├── AC_TEMPLATE.md         # How to write good acceptance criteria for AI
+│   └── EVAL_RUBRIC.md         # Eval rubric — verifies AI output against ACs
+├── prompts/
+│   ├── prd.md                 # /prd — starts the PRD interview
+│   ├── plan.md                # /plan — generates implementation plan from PRD
+│   ├── review.md              # /review — runs AI-specific code review
+│   └── eval.md                # /eval — evaluates output against rubric
 └── README.md
 ```
 
@@ -66,6 +73,12 @@ Implements features against a structured PRD spec. Every code change is traced t
 
 See [skills/spec-driven/SKILL.md](skills/spec-driven/SKILL.md).
 
+### code-review-ai
+
+Structured code review tailored to AI-generated code. Covers AI-specific failure modes: hallucinated dependencies, plausible-but-wrong logic, missing error handling (the 20% problem), over-engineering, and security. Also checks AC coverage against the PRD and evaluates the agent's trajectory.
+
+See [skills/code-review-ai/SKILL.md](skills/code-review-ai/SKILL.md).
+
 ### pdf-reader
 
 Read and comprehend PDF files using text extraction + selective page rendering. Uses a hybrid approach for maximum comprehension of equations, diagrams, and structured content.
@@ -91,23 +104,48 @@ A structured document template for Product Requirements Documents. Covers core g
 
 A guide to writing good acceptance criteria for AI. Covers the 5 patterns (action→result, condition→behavior, negative constraints, state transitions, quantitative bounds) and common anti-patterns.
 
+### EVAL_RUBRIC.md
+
+An evaluation rubric template that maps acceptance criteria from a PRD to verifiable checks. Covers output evaluation (does the code compile, pass tests, satisfy ACs?) and trajectory evaluation (did the agent follow the right process?). Includes AI-specific failure checks.
+
+See [templates/EVAL_RUBRIC.md](templates/EVAL_RUBRIC.md).
+
+## Prompt Templates
+
+Pi supports `/name` prompt templates that expand on typing. These shortcut the workflow:
+
+| Template | Shortcut | What It Does |
+|---|---|---|
+| `prd.md` | `/prd` | Starts the PRD engineering interview |
+| `plan.md` | `/plan` | Generates implementation plan from an approved PRD |
+| `review.md` | `/review` | Runs AI-specific code review on recent changes |
+| `eval.md` | `/eval` | Evaluates output against the eval rubric |
+
+Type `/prd` to start planning a feature, `/plan` before implementing, `/review` after implementation.
+
 ## The Workflow
 
-The two skills + templates work together to create a **spec-first pipeline**:
+The skills, templates, and prompts work together to create a **closed-loop pipeline**:
 
 ```
 Rough idea
-    ↓
+    ↓  /prd
 [prd-engineering skill] — structured interview captures intent, boundaries, ACs
     ↓
 Structured PRD document (PRD_TEMPLATE.md)
     ↓
 Review & approve
-    ↓
+    ↓  /plan
 [spec-driven skill] — implement with AC tracing, edge case handling, non-goal checks
     ↓
 Code that maps to every acceptance criterion
+    ↓  /review or /eval
+[code-review-ai skill] — AI-specific failure checks, AC coverage, trajectory eval
+    ↓
+Ship / Minor Fixes / Rework / Redo Spec verdict
 ```
+
+The loop closes: spec → implement → evaluate → feedback → next iteration.
 
 ## Setup with GNU Stow
 
