@@ -1,0 +1,12 @@
+{
+  "name": "web-access",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Live web search and content fetching (HTML, PDF, GitHub) for the pi coding agent.",
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "linkedom": "^0.18.13",
+    "turndown": "^7.2.0",
+    "unpdf": "^1.8.1"
+  }
+}
