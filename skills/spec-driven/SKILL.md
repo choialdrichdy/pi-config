@@ -46,20 +46,9 @@ Before writing any code, present a brief plan:
 
 Ask for confirmation before proceeding.
 
-### Step 3: Implement with AC Tracing
+### Step 3: Implement Against the Spec
 
-For each file you write or modify, add a comment at the top tracing which acceptance criteria it serves:
-
-```typescript
-// PRD: User Report Export — AC-1, AC-2, AC-3
-```
-
-When implementing a specific AC, note it in the implementation:
-
-```typescript
-// AC-1: User can click Export and receive PDF within 5 seconds
-export function handleExportClick() { ... }
-```
+Implement changes directly against the approved spec. Keep acceptance-criteria coverage in the implementation plan, tests, and completion summary.
 
 ### Step 4: Handle Edge Cases from the PRD
 
