@@ -1,0 +1,23 @@
+{
+  "lastChangelogVersion": "1.1.0",
+  "theme": "gruvbox-dark-medium",
+  "defaultTools": ["+codemode"],
+  "packages": [
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@upstash/context7-pi",
+    "npm:pi-mcp-adapter",
+    "npm:pi-web-access"
+  ],
+  "extensions": ["-builtin:mcp"],
+  "compaction": {
+    "enabled": false
+  },
+  "transport": "auto",
+  "markdown": {
+    "mermaid": "streaming"
+  },
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "tuiMode": "fullscreen"
+}
